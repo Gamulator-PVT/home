@@ -162,50 +162,88 @@
   </div>
 
   <script>
-    const APK_URLS = {
-      arm64: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-arm64-v8a-release.apk",
-      arm32: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-armeabi-v7a-release.apk",
-      x86_64: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-x86_64-release.apk",
-      universal: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-universal-release.apk"
-    };
+  const APK_URLS = {
+    arm64: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-arm64-v8a-release.apk",
+    arm32: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-armeabi-v7a-release.apk",
+    x86_64: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-x86_64-release.apk",
+    universal: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-universal-release.apk"
+  };
 
-    async function detectArchitecture() {
-      const btn = document.getElementById("download-btn");
+  function supports64Bit() {
+    // 64-bit BigInt math & WASM i64 instruction validation
+    try {
+      if (typeof BigInt !== "undefined") {
+        const wasm64Check = new Uint8Array([
+          0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00,
+          0x01, 0x05, 0x01, 0x60, 0x00, 0x01, 0x7e, // func returns i64
+          0x03, 0x02, 0x01, 0x00,
+          0x0a, 0x06, 0x01, 0x04, 0x00, 0x42, 0x00, 0x0b // i64.const 0
+        ]);
+        return WebAssembly.validate(wasm64Check);
+      }
+    } catch (e) {}
+    return false;
+  }
 
-      if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
-        try {
-          const hints = await navigator.userAgentData.getHighEntropyValues(["architecture", "bitness"]);
-          const arch = (hints.architecture || "").toLowerCase();
-          const bitness = hints.bitness;
+  async function detectArchitecture() {
+    const btn = document.getElementById("download-btn");
+    const ua = (navigator.userAgent || "").toLowerCase();
+    const platform = (navigator.platform || "").toLowerCase();
+    const isAndroid = ua.includes("android");
 
-          if (arch.includes("arm")) {
-            if (bitness === "64") {
-              btn.href = APK_URLS.arm64;
-              btn.innerText = "Download APK (ARM64 Detected)";
-              return;
-            } else {
-              btn.href = APK_URLS.arm32;
-              btn.innerText = "Download APK (ARM32 Detected)";
-              return;
-            }
-          }
+    // 1. Client Hints (Chromium Desktop / modern Chrome)
+    if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+      try {
+        const hints = await navigator.userAgentData.getHighEntropyValues([
+          "architecture",
+          "bitness",
+          "platform"
+        ]);
+        
+        const arch = (hints.architecture || "").toLowerCase();
+        const bitness = hints.bitness;
 
-          if (arch.includes("x86") && bitness === "64") {
-            btn.href = APK_URLS.x86_64;
-            btn.innerText = "Download APK (x86_64 Detected)";
+        if (arch.includes("arm") || hints.platform === "Android") {
+          if (bitness === "64" || supports64Bit()) {
+            btn.href = APK_URLS.arm64;
+            btn.innerText = "Download APK (ARM64 Detected)";
+            return;
+          } else if (bitness === "32") {
+            btn.href = APK_URLS.arm32;
+            btn.innerText = "Download APK (ARM32 Detected)";
             return;
           }
-        } catch (e) {
-          console.warn("Architecture detection fallback:", e);
         }
-      }
 
-      // Default fallback if detection is blocked or unsupported
-      btn.href = APK_URLS.universal;
-      btn.innerText = "Download Universal APK";
+        if (arch.includes("x86") && bitness === "64") {
+          btn.href = APK_URLS.x86_64;
+          btn.innerText = "Download APK (x86_64 Detected)";
+          return;
+        }
+      } catch (e) {
+        console.warn("Client hints error:", e);
+      }
     }
 
-    detectArchitecture();
-  </script>
+    // 2. Android Fallback (Mobile browsers that sanitize architecture)
+    if (isAndroid || platform.includes("arm") || platform.includes("linux aarch64")) {
+      if (supports64Bit()) {
+        btn.href = APK_URLS.arm64;
+        btn.innerText = "Download APK (ARM64 Detected)";
+        return;
+      } else {
+        btn.href = APK_URLS.arm32;
+        btn.innerText = "Download APK (ARM32 Detected)";
+        return;
+      }
+    }
+
+    // 3. Fallback for Desktop/Unknown devices
+    btn.href = APK_URLS.universal;
+    btn.innerText = "Download Universal APK";
+  }
+
+  detectArchitecture();
+</script>
 </body>
 </html>
