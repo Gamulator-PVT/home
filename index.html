@@ -206,18 +206,18 @@
         if (arch.includes("arm") || hints.platform === "Android") {
           if (bitness === "64" || supports64Bit()) {
             btn.href = APK_URLS.arm64;
-            btn.innerText = "Download APK (ARM64 Detected)";
+            btn.innerText = "Download APK (ARM64)";
             return;
           } else if (bitness === "32") {
             btn.href = APK_URLS.arm32;
-            btn.innerText = "Download APK (ARM32 Detected)";
+            btn.innerText = "Download APK (ARM32)";
             return;
           }
         }
 
         if (arch.includes("x86") && bitness === "64") {
           btn.href = APK_URLS.x86_64;
-          btn.innerText = "Download APK (x86_64 Detected)";
+          btn.innerText = "Download APK (x86_64)";
           return;
         }
       } catch (e) {
@@ -229,11 +229,11 @@
     if (isAndroid || platform.includes("arm") || platform.includes("linux aarch64")) {
       if (supports64Bit()) {
         btn.href = APK_URLS.arm64;
-        btn.innerText = "Download APK (ARM64 Detected)";
+        btn.innerText = "Download APK (ARM64)";
         return;
       } else {
         btn.href = APK_URLS.arm32;
-        btn.innerText = "Download APK (ARM32 Detected)";
+        btn.innerText = "Download APK (ARM32)";
         return;
       }
     }
