@@ -119,22 +119,22 @@
   <div class="container">
     <!-- HERO & SMART DOWNLOAD -->
     <section class="hero">
-      <div class="badge">v1.0.0-alpha</div>
+      <div class="badge">Latest Release</div>
       <h1>Gamulator</h1>
       <p>Low input lag, physical controller mapping, and cycle-accurate performance. Play your coin-op arcade backups on Android.</p>
       
       <!-- Dynamic Main Button -->
-      <a id="download-btn" class="btn-main" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-universal-release.apk">
+      <a id="download-btn" class="btn-main" href="https://github.com/Gamulator-PVT/home/releases/latest/download/gamulator-universal.apk">
         Download Universal APK
       </a>
 
       <!-- Manual Direct Links -->
       <div class="fallback-links">
         <span>Manual builds:</span>
-        <a id="link-arm64" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-arm64-v8a-release.apk?v=2">ARM64 (v8a)</a> •
-        <a id="link-arm32" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-armeabi-v7a-release.apk?v=2">ARM32 (v7a)</a> •
-        <a id="link-x86_64" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-x86_64-release.apk?v=2">x86_64</a> •
-        <a id="link-universal" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-universal-release.apk?v=2">Universal</a>
+        <a id="link-arm64" href="https://github.com/Gamulator-PVT/home/releases/latest/download/gamulator-arm64-v8a.apk">ARM64 (v8a)</a> •
+        <a id="link-arm32" href="https://github.com/Gamulator-PVT/home/releases/latest/download/gamulator-armeabi-v7a.apk">ARM32 (v7a)</a> •
+        <a id="link-x86_64" href="https://github.com/Gamulator-PVT/home/releases/latest/download/gamulator-x86_64.apk">x86_64</a> •
+        <a id="link-universal" href="https://github.com/Gamulator-PVT/home/releases/latest/download/gamulator-universal.apk">Universal</a>
       </div>
     </section>
 
@@ -162,15 +162,16 @@
   </div>
 
   <script>
+  const GITHUB_BASE = "https://github.com/Gamulator-PVT/home/releases/latest/download";
+
   const APK_URLS = {
-    arm64: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-arm64-v8a-release.apk?v=2",
-    arm32: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-armeabi-v7a-release.apk?v=2",
-    x86_64: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-x86_64-release.apk?v=2",
-    universal: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-universal-release.apk?v=2"
+    arm64: `${GITHUB_BASE}/gamulator-arm64-v8a.apk`,
+    arm32: `${GITHUB_BASE}/gamulator-armeabi-v7a.apk`,
+    x86_64: `${GITHUB_BASE}/gamulator-x86_64.apk`,
+    universal: `${GITHUB_BASE}/gamulator-universal.apk`
   };
 
   function supports64Bit() {
-    // 64-bit BigInt math & WASM i64 instruction validation
     try {
       if (typeof BigInt !== "undefined") {
         const wasm64Check = new Uint8Array([
@@ -244,6 +245,6 @@
   }
 
   detectArchitecture();
-</script>
+  </script>
 </body>
 </html>
