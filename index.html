@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gamulator - Next-Gen Arcade Emulator</title>
+  <style>
+    :root {
+      --bg: #0d0f17;
+      --card-bg: #161a26;
+      --accent: #f43f5e;
+      --accent-hover: #e11d48;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border: #23293b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 0 1.5rem;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    /* SECTION 1: HERO */
+    .hero {
+      text-align: center;
+      padding: 5rem 1rem 3rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .btn-main {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.9rem 2.2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 20px rgba(244, 63, 94, 0.35);
+    }
+    .btn-main:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+    .fallback-links {
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .fallback-links a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .fallback-links a:hover { text-decoration: underline; }
+
+    /* SECTION 2: FEATURES */
+    .features {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+    .card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: #fff; }
+    .card p { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- HERO & SMART DOWNLOAD -->
+    <section class="hero">
+      <div class="badge">v1.0.0-alpha</div>
+      <h1>Gamulator</h1>
+      <p>Low input lag, physical controller mapping, and cycle-accurate performance. Play your coin-op arcade backups on Android.</p>
+      
+      <!-- Dynamic Main Button -->
+      <a id="download-btn" class="btn-main" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-universal-release.apk">
+        Download Universal APK
+      </a>
+
+      <!-- Manual Direct Links -->
+      <div class="fallback-links">
+        <span>Manual builds:</span>
+        <a id="link-arm64" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-arm64-v8a-release.apk">ARM64 (v8a)</a> •
+        <a id="link-arm32" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-armeabi-v7a-release.apk">ARM32 (v7a)</a> •
+        <a id="link-x86_64" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-x86_64-release.apk">x86_64</a> •
+        <a id="link-universal" href="https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-universal-release.apk">Universal</a>
+      </div>
+    </section>
+
+    <!-- HIGHLIGHT FEATURES -->
+    <section class="features">
+      <div class="grid">
+        <div class="card">
+          <h3>⚡ Ultra-Low Latency</h3>
+          <p>Native input handling built for lightning-fast reflex gaming and precise combos.</p>
+        </div>
+        <div class="card">
+          <h3>🕹️ Plug & Play Controls</h3>
+          <p>Auto-detects Bluetooth gamepads, USB arcade sticks, and fully customizable touch controls.</p>
+        </div>
+        <div class="card">
+          <h3>💾 Save & Rewind</h3>
+          <p>Instant save states and dynamic rewind so you never lose your progress.</p>
+        </div>
+      </div>
+
+      <footer>
+        <p><strong>Disclaimer:</strong> Gamulator does not bundle or distribute any ROMs or BIOS files. Users must supply their own legally acquired game dumps.</p>
+      </footer>
+    </section>
+  </div>
+
+  <script>
+    const APK_URLS = {
+      arm64: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-arm64-v8a-release.apk",
+      arm32: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-armeabi-v7a-release.apk",
+      x86_64: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-x86_64-release.apk",
+      universal: "https://gamulator.kawsarthedebugger.site/gamulator-1.0.0-alpha-universal-release.apk"
+    };
+
+    async function detectArchitecture() {
+      const btn = document.getElementById("download-btn");
+
+      if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+        try {
+          const hints = await navigator.userAgentData.getHighEntropyValues(["architecture", "bitness"]);
+          const arch = (hints.architecture || "").toLowerCase();
+          const bitness = hints.bitness;
+
+          if (arch.includes("arm")) {
+            if (bitness === "64") {
+              btn.href = APK_URLS.arm64;
+              btn.innerText = "Download APK (ARM64 Detected)";
+              return;
+            } else {
+              btn.href = APK_URLS.arm32;
+              btn.innerText = "Download APK (ARM32 Detected)";
+              return;
+            }
+          }
+
+          if (arch.includes("x86") && bitness === "64") {
+            btn.href = APK_URLS.x86_64;
+            btn.innerText = "Download APK (x86_64 Detected)";
+            return;
+          }
+        } catch (e) {
+          console.warn("Architecture detection fallback:", e);
+        }
+      }
+
+      // Default fallback if detection is blocked or unsupported
+      btn.href = APK_URLS.universal;
+      btn.innerText = "Download Universal APK";
+    }
+
+    detectArchitecture();
+  </script>
+</body>
+</html>
